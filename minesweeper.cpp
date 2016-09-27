@@ -1,3 +1,27 @@
+/*A game of MineSweeper by James Safko
+ 
+ This minesweeper.cpp holds the main menus and calls minesweeperGame.h when the game begins.
+ 
+ When the game is called, it operates just by using that game's class methods. Once the game ends,
+ the stack returns to the main menu with an integer score.
+ 
+ SCORING
+ We utilize a file i/o system that automatically saves user's scores to text files,
+ which are automatically recalled when they play the game at a later time.
+ 
+ We have a hash map of Score objects. Each Score object holds a player's score data.
+ 
+ When the player enters their names...
+ if (they don't have a score object in the score map){
+    if(they don't have a name.txt file with a score){
+        it will create a .txt file for them and add them to the score map
+    }
+    if(they do have a name.txt file with a score){
+    it will add a score object to the score map
+    }
+ }
+ */
+
 #include <iostream>
 #include <fstream>
 #include <map>

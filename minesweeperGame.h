@@ -68,6 +68,7 @@ Minesweeper::Minesweeper(){
     height = 0;
 }
 
+/*INPUT VALIDATOR. Takes in the user's choice, start(lowest value allowed), range(number of choices possible)*/
 bool Minesweeper::validation(int &userChoice, int start, int range){
     if(cin.fail()) {//If the data entered is a string, char, or non-int number
         cin.clear();//clear the instream
@@ -191,6 +192,7 @@ int Minesweeper::startMenu(){
     return score;
 }
 
+/*START GAME. Clears the mine field vector. Creates the start time. Remakes the square matrix*/
 void Minesweeper::startGame(){
     firstSelect = true;
     mineField.clear();
@@ -270,7 +272,8 @@ void Minesweeper::game(){
                     if(!validation(y, 1, height))//Input validation
                         break;
                     
-                    //If this is the first selection, the squares must be labelled after
+                    /*If this is the first selection, the squares must be labelled after (to prevent the first square
+                     selected from being a mine)*/
                     if(firstSelect){
                         generateMines(x, y);
                         generateNonMines();
@@ -347,7 +350,7 @@ void Minesweeper::printMatrix(){
         for(c = 0; c < width; c++){//prints
             cout<< "| ";//value
 
-            if(mineField[r + (c * width)].isFlagged == true)//if it's flagged
+            if(mineField[r + (c * width)].isFlagged == true && !mineField[r + (c * width)].doPrint)//if it's flagged
                 cout<<"F ";
             else if(mineField[r + (c * width)].doPrint){//If this square is to be printed
                 if(mineField[r + (c * width)].isMine){//If it's a mine
@@ -370,8 +373,9 @@ void Minesweeper::printMatrix(){
     cout<<"+"<<endl<<endl;
 }
 
-/*Taking in the first selection location, this generates randomly the
- location of the mines.*/
+
+/*GENERATES MINES. Taking in the first selection location, this generates randomly the
+ location of the mines (but not on the first selection location)*/
 void Minesweeper::generateMines(int xNot, int yNot){
     int x, y, r, c;
     int i = 0;
@@ -425,7 +429,8 @@ void Minesweeper::minesDown(int &localMines, int r, int c){
         localMines++;
 }
 
-/*Loops through each index in the array and calculates how many of the adjacent
+
+/*GENERATES NON MINES SQUARES. Loops through each index in the array and calculates how many of the adjacent
  indexes are mines. */
 void Minesweeper::generateNonMines(){
     int localMines = 0;
@@ -500,6 +505,7 @@ void Minesweeper::generateNonMines(){
     }
 }
 
+/*Called if you hit a mine or if you activate all squares not occupied by mines. Passes in string "lose", "win", or "draw."*/
 void Minesweeper::endGame(string winlose){
     int flaggedRight = 0;
     int activatedSafely = 0;
@@ -535,7 +541,7 @@ void Minesweeper::endGame(string winlose){
     cout<<"Your final score is "<<score<<endl;
 }
 
-/*Prints all square's info*/
+/*Prints all square's info (debugging tool)*/
 void Minesweeper::printInfo(){
     int size = (int) mineField.size();
     for(int i = 0; i < size; i++){

@@ -1,64 +1,70 @@
+/*SCORE CLASS
+ Created by James Safko.
+ Each instance of this class represents a player and assists with file i/o,
+ and score management on name.txt files.
+ EXAMPLE:
+ For me, James, I would enter my name "James." After playing, my score would be saved
+ to a file named "James.txt".
+ */
+
+#ifndef Score_h
+#define Score_h
+
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <iostream>
 #include <vector>
+#include <cstdlib>
 using namespace std;
 
-#ifndef score_h
-#define score_h
 
 class Score{
 public:
-    string name;
-    int ticTacToeScore, minesweeperScore, connectFourScore, goFishScore,
-    sodukuScore, currentScore, fileScore;
-public:
-    Score(string nameIn);
-    int getFileScore();//Gets the score from your old game
-    void updateFile();
+    string name;//Player's name
+    int currentScore;//The score from this current gaming session
+    int fileScore;//The score from their cumulative previous sessions (sourced from their .txt file)
+    
+    Score(string nameIn);//Constructor
+    int getFileScore();//Reads in score from name.txt file
+    void updateFile();//Updates the player's name.txt file with their score
 };
 
 Score::Score(string nameIn){
     name = nameIn;
-    
-    fileScore = getFileScore();
-    ticTacToeScore = 0;
-    minesweeperScore = 0;
-    connectFourScore= 0;
-    goFishScore = 0;
-    sodukuScore = 0;
+    fileScore = getFileScore();//Assigns name.txt score (if there is one) to fileScore
     currentScore = 0;
 }
 
+//Reads in score from name.txt file
 int Score::getFileScore(){
     string readIn = "";
+    ifstream in;
     
-    ifstream in(name + ".txt");
-    if(in.fail()){//NOT EXIST
-        cout<<"DNE"<<endl;
+    in.open((name + ".txt").c_str());//Opens name.txt file
+    if(in.fail()){//If the file does not exist
         in.close();//closes in stream
-        ofstream out(name + ".txt");//creates out stream file with name
+        ofstream out((name + ".txt").c_str());//creates out stream file with name
         out<<0;//writes a score of zero
         out.close();
-        return 0;
+        return 0;//Returns score of zerp
     }
-    else{//DOES EXIST
-        while(!in.eof())//writes the score
+    else{//If the file name does exist
+        while(!in.eof())//Takes the score
             in >> readIn;
         in.close();
-        return stoi(readIn);//returns the int version of score
+        return (atoi(readIn.c_str()) + 0);//Converts the string to an int and returns it
     }
+    return 0;
 }
 
+//Updates the player's name.txt file with their score
 void Score::updateFile(){
     fstream file;
-    fileScore += currentScore;
-    file.open(name + ".txt");
-    file << fileScore;
+    fileScore += currentScore;//Updates fileScore.
+    file.open((name + ".txt").c_str());//Opens name.txt file
+    file << fileScore;//Writes new score in
     file.close();
 }
 
-
-
-
-#endif /* score_h */
+#endif /* Score_h */
