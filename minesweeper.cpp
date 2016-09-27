@@ -32,7 +32,7 @@ void askOnePlayerName(string &currP1, map<string, Score> &scoreMap){
     cout << "Who is playing this game? "<<endl;
     cin>>currP1;
     if(scoreMap.count(currP1)==0)//Equal to zero if there is no mathcing name
-        scoreMap.emplace(currP1, Score(currP1));//Makes a new name
+        scoreMap.insert(map<string, Score>::value_type(currP1, Score(currP1)));//Inserts a new Score object with their name
     else
         cout<<"Welcome back, "<<currP1<<"!"<<endl;
 }
