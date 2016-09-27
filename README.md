@@ -1,1 +1,4 @@
-# MineSweeper
+# MineSweeper!
+This project is a spin on the classic game Minesweeper. In my version, I have added the ability to save different score profiles for different people by utilizing a Score class. Before you open Minesweeper, you are asked to enter your name. The Score class creates a name.txt file for your corresponding name (or loads an already existing name.txt file that corresponds to your name). Once you complete a game of MineSweeper, your score is saved to this .txt file and is accessible the next time you open the program.
+The actual game of MineSweeper has Easy mode, Hard mode, and Custom mode where you can designate how lare you want your matrix to be and how many mines you want the matrix to contain. Once you decide your mode, you have the ability to activate a square or flag a square. Once you hit a mine or complete the game, you will be told your final score and how long it took to complete the game. See the rules included in the program for more details!
+If you run into any bugs, please let me know! Thanks!
